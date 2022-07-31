@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('order_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('attacable_id')->nullable();
-            $table->string('attacable_type')->nullable();
-            $table->string('path')->nullable();
-            $table->string('mimiType');
-            $table->string('file_name');
+            $table->double('total_price');
+            $table->integer('qty');
+            $table->foreignId('product_id');
+            $table->foreignId('order_id');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('order_details');
     }
 };

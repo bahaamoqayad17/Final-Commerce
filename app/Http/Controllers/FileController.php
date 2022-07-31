@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\UpdateFileRequest;
+use App\Http\Resources\FileResource;
+use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
@@ -15,7 +17,7 @@ class FileController extends Controller
      */
     public function index()
     {
-        //
+        return FileResource::collection(File::all());
     }
 
     /**
@@ -36,7 +38,16 @@ class FileController extends Controller
      */
     public function store(StoreFileRequest $request)
     {
-        //
+        $new_file = rand() . time() . rand() . $request->file('file')->getClientOriginalName();
+        $new_file = str_replace(' ', '', $new_file);
+        $new_file = strtolower($new_file);
+        $path = Storage::disk('local')->put('uploads', $request->file('file'), $new_file);
+        $file = File::create([
+            'path' => $path,
+            'mimeType' => $request->file('file')->extension(),
+            'file_name' => $new_file
+        ]);
+        return new FileResource($file);
     }
 
     /**
@@ -47,7 +58,7 @@ class FileController extends Controller
      */
     public function show(File $file)
     {
-        //
+        return new FileResource($file);
     }
 
     /**
@@ -70,7 +81,17 @@ class FileController extends Controller
      */
     public function update(UpdateFileRequest $request, File $file)
     {
-        //
+        $new_file = rand() . time() . rand() . $request->file('file')->getClientOriginalName();
+        $new_file = str_replace(' ', '', $new_file);
+        $new_file = strtolower($new_file);
+        $path = Storage::disk('local')->put('uploads', $request->file('file'), $new_file);
+
+        $file->update([
+            'path' => $path,
+            'mimeType' => $request->file('file')->extension(),
+            'file_name' => $new_file
+        ]);
+        return new FileResource($file);
     }
 
     /**
@@ -81,6 +102,6 @@ class FileController extends Controller
      */
     public function destroy(File $file)
     {
-        //
+        $file->delete();
     }
 }

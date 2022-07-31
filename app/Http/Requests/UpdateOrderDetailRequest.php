@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFileRequest extends FormRequest
+class UpdateOrderDetailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,11 @@ class StoreFileRequest extends FormRequest
     public function rules()
     {
         return [
-            'attacable_id' => 'nullable',
-            'attacable_type' => 'nullable',
-            'mimiType' => 'required',
-            'file_name' => 'required'
+            'total_price' => 'required',
+            'qty' => 'required',
+            'user_id' => 'required',
+            'product_id' => 'required|exists:products,id',
+            'order_id' => 'required'
         ];
     }
 }

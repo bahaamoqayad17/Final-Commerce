@@ -13,7 +13,7 @@ class UpdateFileRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class UpdateFileRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'attacable_id' => 'required',
+            'attacable_type' => 'required',
+            'mimiType' => 'required',
+            'file_name' => 'required'
         ];
     }
 }

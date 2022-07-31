@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('attacable_id')->nullable();
-            $table->string('attacable_type')->nullable();
-            $table->string('path')->nullable();
-            $table->string('mimiType');
-            $table->string('file_name');
+            $table->double('total');
+            $table->foreignId('transaction_id');
+            $table->foreignId('user_id');
+            $table->foreignId('order_id');
+            $table->integer('status')->default(0); // 0 => Pending , 1 => Completed , 2 => Failed
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('payments');
     }
 };

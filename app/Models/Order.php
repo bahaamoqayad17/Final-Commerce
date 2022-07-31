@@ -5,17 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class File extends Model
+class Order extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public function attachable()
+    public function products()
     {
-        return $this->morphTo();
-    }
-
-    public function getRouteKeyName()
-    {
-        return 'path';
+        return $this->hasMany(Product::class);
     }
 }
