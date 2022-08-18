@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\OrderController;
@@ -20,13 +21,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::group(['middleware' => ['api', 'auth:api', 'is_admin']], function () {
 
-Route::resource('/categories', CategoryController::class);
-Route::resource('/products', ProductController::class);
-Route::resource('/files', FileController::class);
-Route::resource('/orders', OrderController::class);
-Route::resource('/payments', PaymentController::class);
-Route::resource('/order-details', OrderDetailController::class);
+    Route::resource('/categories', CategoryController::class);
+    Route::resource('/products', ProductController::class);
+    Route::resource('/files', FileController::class);
+    Route::resource('/orders', OrderController::class);
+    Route::resource('/payments', PaymentController::class);
+    Route::resource('/order-details', OrderDetailController::class);
+});
+Route::group([
+
+    'middleware' => ['api', 'auth:api'],
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('login', [AuthController::class, 'login'])->withoutMiddleware(['auth:api']);
+    Route::post('logout', [AuthController::class, 'logout'])->withoutMiddleware(['auth:api']);
+    Route::post('refresh', [AuthController::class, 'refresh'])->withoutMiddleware(['auth:api']);
+    Route::get('user', [AuthController::class, 'me']);
+});
+Route::post('register', [AuthController::class, 'register']);

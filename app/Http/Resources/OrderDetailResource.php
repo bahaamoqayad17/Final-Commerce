@@ -3,7 +3,6 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 
 class OrderDetailResource extends JsonResource
 {
@@ -15,15 +14,6 @@ class OrderDetailResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'total_price' => $this->total_price,
-            'qty' => $this->qty,
-            'user_id' => Auth::id(),
-            'product_id' => $this->product->id,
-            'order_id' => $this->order->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ];
+        return parent::toArray($request);
     }
 }

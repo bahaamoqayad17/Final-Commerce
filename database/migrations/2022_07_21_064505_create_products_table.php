@@ -20,7 +20,7 @@ return new class extends Migration
             $table->double('price')->nullable();
             $table->double('sale_price')->nullable();
             $table->foreignId('category_id')->default(1);
-            $table->integer('status');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

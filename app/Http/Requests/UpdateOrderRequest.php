@@ -27,7 +27,7 @@ class UpdateOrderRequest extends FormRequest
             'total_price' => 'required',
             'qty' => 'required',
             'user_id' => 'required',
-            'status' => '1'
+            'status' => '1',
         ];
     }
 }

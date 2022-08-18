@@ -27,7 +27,7 @@ class UpdatePaymentRequest extends FormRequest
             'total' => 'required',
             'transaction_id' => 'nullable',
             'user_id' => 'required',
-            'order_id' => 'required'
+            'order_id' => 'required',
         ];
     }
 }

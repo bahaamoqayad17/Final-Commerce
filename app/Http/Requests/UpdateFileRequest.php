@@ -27,7 +27,7 @@ class UpdateFileRequest extends FormRequest
             'attacable_id' => 'required',
             'attacable_type' => 'required',
             'mimiType' => 'required',
-            'file_name' => 'required'
+            'file_name' => 'required',
         ];
     }
 }

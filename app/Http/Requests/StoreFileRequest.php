@@ -26,8 +26,8 @@ class StoreFileRequest extends FormRequest
         return [
             'attacable_id' => 'nullable',
             'attacable_type' => 'nullable',
-            'mimiType' => 'required',
-            'file_name' => 'required'
+            'mimiType' => 'nullable',
+            'file_name' => 'nullable',
         ];
     }
 }

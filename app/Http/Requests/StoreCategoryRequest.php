@@ -25,7 +25,6 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => 'nullable',
-            'status' => '0'
         ];
     }
 }

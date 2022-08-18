@@ -13,19 +13,8 @@ class FileResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-
     public function toArray($request)
     {
-        $file = new File();
-        $className = get_class($file->attachable()->getRelated());
-        return [
-            'id' => $this->id,
-            'attacable_id' => $this->attachable->id,
-            'attacable_type' => $className,
-            'mimiType' => $this->mimiType,
-            'file_name' => $this->file_name,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ];
+        return parent::toArray($request);
     }
 }

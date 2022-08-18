@@ -27,7 +27,7 @@ class StoreOrderRequest extends FormRequest
             'total_price' => 'required',
             'qty' => 'required',
             'user_id' => 'required',
-            'status' => '0'
+            'status' => '0',
         ];
     }
 }

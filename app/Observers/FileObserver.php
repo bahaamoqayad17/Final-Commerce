@@ -32,7 +32,7 @@ class FileObserver
     public function updating(File $file)
     {
         if (file_exists($file->path)) {
-            Storage::delete($file->path);
+            Storage::disk('local')->delete($file->path);
         }
     }
 
@@ -50,7 +50,7 @@ class FileObserver
     public function deleting(File $file)
     {
         if (file_exists($file->path)) {
-            Storage::delete($file->path);
+            Storage::disk('local')->delete($file->path);
         }
     }
 
