@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
-use App\Models\File;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
+
+
+
+    public function __construct()
+    {
+        $this->authorizeResource(Product::class, 'products');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -39,9 +44,10 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create([
+        $product = Product::create(
             $request->validated()
-        ]);
+        );
+
         return new ProductResource($product);
     }
 
@@ -76,9 +82,10 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        $product->update([
+        $product->update(
             $request->validated()
-        ]);
+        );
+
         return new ProductResource($product);
     }
 

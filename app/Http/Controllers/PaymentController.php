@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\Payment;
-use App\Models\OrderDetail;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\PaymentResource;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
-use Stripe\Order as StripeOrder;
+use App\Http\Resources\PaymentResource;
+use App\Models\Order;
+use App\Models\Payment;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -55,6 +53,7 @@ class PaymentController extends Controller
         } else {
             $payment->update(['status' => 2]);
         }
+
         return new PaymentResource($payment);
     }
 
@@ -90,8 +89,9 @@ class PaymentController extends Controller
     public function update(UpdatePaymentRequest $request, Payment $payment)
     {
         $payment->update([
-            $request->validated()
+            $request->validated(),
         ]);
+
         return new PaymentResource($payment);
     }
 

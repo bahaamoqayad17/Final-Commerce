@@ -18,7 +18,7 @@ class ProductPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return $user->hasRole('product-editor') || $user->hasRole('product-delete');
     }
 
     /**
@@ -30,7 +30,7 @@ class ProductPolicy
      */
     public function view(User $user, Product $product)
     {
-        //
+        return $user->hasRole('product_show');
     }
 
     /**
@@ -41,7 +41,7 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasRole('product_create');
     }
 
     /**
@@ -53,7 +53,7 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        //
+        return $user->hasRole('product-editor');
     }
 
     /**
@@ -65,7 +65,7 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        //
+        return $user->hasRole('product-delete');
     }
 
     /**

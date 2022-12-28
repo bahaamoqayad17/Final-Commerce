@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\File;
 use App\Http\Requests\StoreFileRequest;
 use App\Http\Requests\UpdateFileRequest;
 use App\Http\Resources\FileResource;
+use App\Models\File;
 use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
@@ -38,17 +38,37 @@ class FileController extends Controller
      */
     public function store(StoreFileRequest $request)
     {
-        $new_file = rand() . time() . rand() . $request->file('file')->getClientOriginalName();
-        $new_file = str_replace(' ', '', $new_file);
-        $new_file = strtolower($new_file);
-        $path = Storage::disk('local')->put('uploads', $request->file('file'), $new_file);
-        $file = File::create([
+
+        $file = $request->file('file');
+        $name = $file->getClientOriginalName();
+        $mimetype = $file->getClientOriginalExtension();
+        $path = $file->store(
+            'files'
+        );
+        $arr = [
+            'attachable_type' => $request->attachable_type,
             'path' => $path,
-            'mimeType' => $request->file('file')->extension(),
-            'file_name' => $new_file
-        ]);
+            'file_name' => $name,
+            'mimiType' => $mimetype,
+
+        ];
+        $file = File::create($arr);
         return new FileResource($file);
     }
+    // {
+    //     $new_file = rand() . time() . rand() . $request->file('file')->getClientOriginalName();
+    //     $new_file = str_replace(' ', '', $new_file);
+    //     $new_file = strtolower($new_file);
+
+    //     $path = Storage::disk('local')->put('uploads', $request->file('file'), $new_file);
+    //     // $file = File::create([
+    //     //     'path' => $path,
+    //     //     'mimeType' => $request->file('file')->extension(),
+    //     //     'file_name' => $new_file,
+    //     // ]);
+    //     return response()->json(['msg' => 'success'], 200);
+    //     // return new FileResource($file);
+    // }
 
     /**
      * Display the specified resource.
@@ -89,8 +109,9 @@ class FileController extends Controller
         $file->update([
             'path' => $path,
             'mimeType' => $request->file('file')->extension(),
-            'file_name' => $new_file
+            'file_name' => $new_file,
         ]);
+
         return new FileResource($file);
     }
 

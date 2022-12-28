@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Stripe\Stripe;
-use Slim\Http\Request;
-use Slim\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class Payment extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
+
+    protected $appends = ['user_id'];
+
     public static function confirm()
     {
         $order = Order::where('user_id', Auth::id())->get();
@@ -37,5 +38,10 @@ class Payment extends Model
             'success_url' => 'https://example.com/success',
             'cancel_url' => 'https://example.com/cancel',
         ]);
+    }
+
+    public function getUserIdAttribute()
+    {
+        return $this->Auth::id();
     }
 }

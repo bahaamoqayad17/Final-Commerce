@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('attacable_id')->nullable();
-            $table->string('attacable_type')->nullable();
+            $table->unsignedBigInteger('attachable_id')->nullable();
+            $table->string('attachable_type')->nullable();
             $table->string('path')->nullable();
-            $table->string('mimiType');
-            $table->string('file_name');
+            $table->string('mimiType')->nullable();
+            $table->string('file_name')->nullable();
             $table->timestamps();
         });
     }

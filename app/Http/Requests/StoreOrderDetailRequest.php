@@ -28,7 +28,7 @@ class StoreOrderDetailRequest extends FormRequest
             'qty' => 'required',
             'user_id' => 'required',
             'product_id' => 'required|exists:products,id',
-            'order_id' => 'required'
+            'order_id' => 'required',
         ];
     }
 }

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\OrderDetail;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Resources\OrderDetailResource;
 use App\Http\Requests\StoreOrderDetailRequest;
 use App\Http\Requests\UpdateOrderDetailRequest;
+use App\Http\Resources\OrderDetailResource;
+use App\Models\OrderDetail;
+use Illuminate\Support\Facades\Auth;
 
 class OrderDetailController extends Controller
 {
@@ -44,11 +42,11 @@ class OrderDetailController extends Controller
         $orderDetail = OrderDetail::where('user_id', Auth::id())->where('product_id', $request->product_id);
         if ($orderDetail) {
             $orderDetail->update([
-                'qty' => $orderDetail->qty + $request->qty
+                'qty' => $orderDetail->qty + $request->qty,
             ]);
         } else {
             OrderDetail::create([
-                $request->validated()
+                $request->validated(),
             ]);
         }
     }
